@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #e6dcff, #d7c9ff, #c8b6ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Georgia, serif;
+    overflow: hidden;
+  }
+
+  .bg-heart {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    background: rgba(255,255,255,0.1);
+    transform: rotate(45deg);
+    animation: beat 6s infinite ease-in-out;
+    z-index: 0;
+  }
+
+  .bg-heart::before,
+  .bg-heart::after {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+  }
+
+  .bg-heart::before { top: -130px; left: 0; }
+  .bg-heart::after { left: -130px; top: 0; }
+
+  @keyframes beat {
+    0%,100% { transform: scale(1) rotate(45deg); }
+    50% { transform: scale(1.04) rotate(45deg); }
+  }
+
+  .envelope {
+    position: relative;
+    width: 360px;
+    height: 240px;
+    background: #f3ecff;
+    border-radius: 16px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  .flap {
+    position: absolute;
+    inset: 0;
+    background: #e0d2ff;
+    clip-path: polygon(0 0, 50% 60%, 100% 0);
+    transform-origin: top;
+    transition: transform 1s ease;
+  }
+
+  .envelope.open .flap {
+    transform: rotateX(180deg);
+  }
+
+  .seal {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background: #d94b5c;
+    transform: rotate(45deg);
+    top: 96px;
+    left: 156px;
+    cursor: pointer;
+    z-index: 3;
+  }
+
+  .seal::before,
+  .seal::after {
+    content: "";
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background: #d94b5c;
+    border-radius: 50%;
+  }
+
+  .seal::before { top: -24px; left: 0; }
+  .seal::after { left: -24px; top: 0; }
+
+  .hint {
+    position: absolute;
+    top: calc(50% + 140px);
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 1px;
+    z-index: 3;
+    animation: fadePulse 2s infinite;
+  }
+
+  @keyframes fadePulse {
+    0%,100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+  }
+
+  .card {
+    width: 420px;
+    max-height: 80vh;
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(14px);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    overflow-y: auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: #6f5fa7;
+    font-weight: normal;
+    margin-bottom: 20px;
+  }
+
+  #letter {
+    color: #4f4a68;
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  .back-btn {
+    margin-top: 25px;
+    padding: 10px 28px;
+    font-size: 14px;
+    border: none;
+    border-radius: 20px;
+    background: #6f5fa7;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="bg-heart"></div>
+
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="envelope" id="envelope">
+  <div class="flap"></div>
+  <div class="seal" id="seal"></div>
+</div>
+
+<div class="hint" id="hint">tap the heart</div>
+
+<div class="overlay" id="overlay">
+  <div class="card">
+    <h1>For You</h1>
+    <div id="letter"></div>
+    <button class="back-btn" id="backBtn" onclick="goNext()">Next page (Journal)</button>
+  </div>
+</div>
+
+<script>
+const messages = [
+  "If you’re here… thank you for taking a moment.",
+  "This page isn’t meant to pull you back.",
+  "It’s only a place where honesty felt safer than silence.",
+  "Today is your birthday.",
+  "And more than anything, I hope you feel peace.",
+  "I hope you feel loved.",
+  "And I hope you feel remembered gently.",
+  "It’s been almost two months now.",
+  "I’ve learned how quiet days can become.",
+  "But I’ve also learned how real love doesn’t disappear loudly.",
+  "December 2024 still lives softly in me.",
+  "That whole month felt different.",
+  "I was slowly falling for you without fear.",
+  "And on the 31st dec 2024…",
+  "We were sharing love.",
+  "Listening to music.",
+  "Talking endlessly.",
+  "It felt pure.",
+  "I felt loved in a way that was calm and real.",
+  "That was the day I chose you — fully.",
+  "And even now… I’m still here.",
+  "Not chasing.",
+  "Not asking.",
+  "Just holding care quietly.",
+  "I know I wasn’t your type.",
+  "And I’ve made peace with that.",
+  "But my love was real.",
+  "And it came without conditions.",
+  "I don’t know how to move on.",
+  "But I do know this —",
+  "I want you to be happy.",
+  "Even if that happiness no longer includes me.",
+  "If loving you means doing it quietly…",
+  "Then I will love you in silence.",
+  "Thank you for everything you did.",
+  "Do you remember I used to say, ‘I’m grateful to have you’ every day?",
+  "I’m still grateful.",
+  "I still say it."
+];
+
+const seal = document.getElementById("seal");
+const envelope = document.getElementById("envelope");
+const overlay = document.getElementById("overlay");
+const letter = document.getElementById("letter");
+const music = document.getElementById("music");
+const hint = document.getElementById("hint");
+const backBtn = document.getElementById("backBtn");
+
+let index = 0;
+
+seal.addEventListener("click", () => {
+  envelope.classList.add("open");
+  seal.style.display = "none";
+  hint.style.display = "none";
+  overlay.style.display = "flex";
+
+  music.volume = 0.3;
+  music.play().catch(() => {});
+
+  function typeLine() {
+    if (index < messages.length) {
+      letter.innerHTML += messages[index] + "<br><br>";
+      index++;
+      setTimeout(typeLine, 700);
+    } else {
+      backBtn.style.display = "inline-block";
+    }
+  }
+
+  typeLine();
+});
+
+function goNext() {
+  window.location.href = "journal.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday, Ladybug 💖</title>
+  <style>
+    /* ===== Body & Background ===== */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #e6e6fa, #d8bfd8, #dda0dd);
+  color: #fff;
+  text-align: center;
+  overflow-x: hidden;
+  position: relative;
+}
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+/* ===== Main content ===== */
+main {
+  position: relative;
+  z-index: 2;
+  padding: 50px 20px 200px 20px; /* extra bottom padding for scrolling */
+}
+
+/* ===== Page Title ===== */
+h1 {
+  font-size: 3em;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px #fff;
+}
+
+/* ===== Letter Lines ===== */
+#line-letter p {
+  font-size: 1.3em;
+  margin: 15px 0;
+  opacity: 0;
+  transition: opacity 1s ease-in;
+  line-height: 1.6em;
+  text-shadow: 0 0 5px #fff;
+}
+
+/* ===== Floating Hearts ===== */
+.floating-heart {
+  position: absolute;
+  font-size: 20px;
+  color: #ff69b4;
+  opacity: 0.7;
+  pointer-events: none;
+  animation: floatHeart 6s linear infinite;
+}
+
+@keyframes floatHeart {
+  0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+  50% { transform: translateY(-200px) translateX(20px); opacity: 1; }
+  100% { transform: translateY(-400px) translateX(-20px); opacity: 0; }
+}
+
+/* ===== Big Beating Heart ===== */
+.big-heart {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 300px;
+  color: #ff69b4;
+  opacity: 0.15;
+  animation: beat 1.2s infinite;
+  z-index: 0;
+  pointer-events: none; /* so it doesn’t block scrolling */
+}
+
+@keyframes beat {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* ===== Next Button ===== */
+#nextBtn {
+  display: none; /* hidden initially */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2em;
+  padding: 20px 40px;
+  background: #ff69b4;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 0 20px #ff69b4;
+  z-index: 3;
+  color: #fff;
+  transition: 0.3s all;
+}
+
+#nextBtn:hover {
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 0 0 30px #ff1493;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Big beating heart -->
+  <div class="big-heart">❤️</div>
+
+  <!-- Floating hearts container -->
+  <div id="hearts-container"></div>
+
+  <main>
+    <h1>Happy Birthday, Ladybug! 🎉</h1>
+    <section id="line-letter"></section>
+    <button id="nextBtn">Next 💗</button>
+  </main>
+
+  <script>
+    // JS for line-by-line letter and floating hearts will go here in Step 
+// ===== Letter Lines =====
+const letterLines = [
+  "My Dearest Ladybug,",
+  "",
+  "Happy Birthday! 🎉💖",
+  "I hope this day fills your heart with as much joy as you’ve given me over the past year.",
+  "I wish you all the happiness, laughter, and love that you truly deserve.",
+  "May your days be filled with light, your dreams turn into achievements, and your hard work pay off in ways bigger than you ever imagined.",
+  "Best of luck for your board exams and every step of your life ahead — I know you will conquer everything with the brilliance and dedication that make you who you are.",
+  "",
+  "I still remember the day you sent me your picture — 11/06/2025.",
+  "The happiness I felt was unlike anything I had ever known.",
+  "I danced, smiled, and forgot the world around me, because in that single moment, all that mattered was you.",
+  "That joy, that spark, still lives in my heart every time I think of you.",
+  "",
+  "You are crazy cute, endlessly sweet, and the kind of person who lights up everyone’s life without even trying.",
+  "I see how hard you work, how much effort you pour into everything you care about.",
+  "I know the late nights, the early mornings, the moments when you doubt yourself.",
+  "But believe me, Ladybug — you are capable of everything.",
+  "Every goal you set, every dream you chase, I know you will achieve it because you are strong, brilliant, and unstoppable.",
+  "",
+  "I want to be honest with you too.",
+  "I am working on myself, growing, learning, trying to become better.",
+  "But if I’m real… without you, it doesn’t feel like progress.",
+  "It feels like walking forward with part of my heart missing, like healing in a place that still aches.",
+  "",
+  "I’m not broken — but I’m not whole either.",
+  "",
+  "Even though you chose to walk a different path, I am still here.",
+  "Not to pull you back. Not to demand anything. Not to ask you to return.",
+  "I am here quietly, faithfully, endlessly, loving you without expectation, caring without conditions, hoping for your happiness even if that happiness doesn’t include me.",
+  "",
+  "Ladybug, you mean more to me than I could ever explain.",
+  "You didn’t just touch my heart — you changed the way I understand love.",
+  "You are my inspiration, my quiet joy, my heartbeat in a world that often feels heavy.",
+  "",
+  "And if someday, somewhere, you ever wonder if you were important to someone…",
+  "if you were deeply cherished…",
+  "if you were truly loved…",
+  "",
+  "The answer will always be yes.",
+  "",
+  "Always.",
+  "",
+  "Yours, in every quiet way,",
+  "Soham / Ghost 🤍"
+];
+
+const letterEl = document.getElementById('line-letter');
+const nextBtn = document.getElementById('nextBtn');
+
+// Line-by-line fade-in
+let currentLine = 0;
+function showNextLine() {
+  if (currentLine < letterLines.length) {
+    const p = document.createElement('p');
+    p.textContent = letterLines[currentLine];
+    letterEl.appendChild(p);
+    setTimeout(() => { p.style.opacity = 1; }, 50);
+    currentLine++;
+    setTimeout(showNextLine, 600); // delay between lines
+  } else {
+    nextBtn.style.display = "block"; // show button at end
+  }
+}
+showNextLine();
+
+// Next button click
+nextBtn.addEventListener('click', () => {
+  window.location.href = 'welcome.html';
+});
+
+// Floating hearts
+const heartsContainer = document.getElementById('hearts-container');
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'floating-heart';
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.fontSize = `${Math.random() * 30 + 20}px`;
+  heart.style.animationDuration = `${4 + Math.random() * 3}s`;
+  heart.textContent = '💖';
+  heartsContainer.appendChild(heart);
+  setTimeout(() => heart.remove(), 7000);
+}
+setInterval(createHeart, 400);
+
+  </script>
+
+</body>
+</html>

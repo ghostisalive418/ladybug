@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You, My Love 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Dancing Script', cursive;
+    background: linear-gradient(135deg, #e6e6fa, #d8bfd8, #dda0dd);
+    color: #fff;
+    text-align: center;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin: 20px 0;
+    text-shadow: 0 0 10px #fff;
+  }
+
+  .instruction {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+    color: #fff;
+    text-shadow: 0 0 8px #0002;
+  }
+
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    padding-bottom: 100px;
+  }
+
+  .feeling-box {
+    width: 180px;
+    height: 120px;
+    border-radius: 15px;
+    background: #4B2EE5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(75,46,229,0.6);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    font-size: 1.1em;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .feeling-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(75,46,229,0.9);
+    background: #5C3AF0;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .modal-content {
+    background: #fff0ff;
+    color: #000;
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 90%;
+    text-align: left;
+    font-size: 1.15em;
+    box-shadow: 0 0 30px rgba(255,105,180,0.8);
+    white-space: pre-line;
+    overflow-y: auto;
+    max-height: 70%;
+  }
+
+  .close-btn {
+    margin-top: 20px;
+    padding: 10px 25px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    background: #ff69b4;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s all;
+  }
+
+  .close-btn:hover {
+    background: #ff1493;
+    transform: scale(1.05);
+  }
+
+  .next-btn {
+    padding: 15px 40px;
+    font-size: 1.3em;
+    border: none;
+    border-radius: 15px;
+    background: #ff69b4;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 50px;
+    transition: 0.3s all;
+    position: relative;
+    z-index: 5;
+  }
+
+  .next-btn:hover {
+    background: #ff1493;
+    transform: scale(1.05);
+  }
+
+  #hearts-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  .floating-heart {
+    position: absolute;
+    font-size: 25px;
+    color: #ff69b4;
+    opacity: 0.7;
+    cursor: pointer;
+    animation: floatHeart linear forwards;
+  }
+
+  @keyframes floatHeart {
+    0% { transform: translate(0,0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--x), var(--y)) scale(1.2); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>For You, My Love 💖</h1>
+<div class="instruction">Open this when you feel…</div>
+
+<div class="gallery">
+  <div class="feeling-box" data-text="Read This When You Feel Stressed<br><br>
+If your mind feels crowded<br>
+and the silence is heavy,<br>
+let this be a place<br>
+where you don’t have to think.<br><br>
+You don’t need to be strong right now.<br>
+You don’t need to solve everything tonight.<br>
+Just breathe.<br>
+Just exist.<br>
+That is already enough.<br><br>
+Even storms pause to gather themselves.<br>
+Even hearts need rest.<br>
+The weight you’re carrying does not define you.<br><br>
+Let the tension loosen, slowly,<br>
+like shoulders dropping after a long day.<br>
+You are allowed to be tired.<br>
+You are allowed to take your time.<br><br>
+There is a quiet kind of care that stays without asking anything from you.<br>
+Let yourself lean into that feeling.<br>
+You are safe here.">Stressed</div>
+
+  <div class="feeling-box" data-text="Read This When You Feel Sad<br><br>
+If your heart feels heavy<br>
+and you don’t know why,<br>
+that’s okay.<br>
+You don’t always need a reason to feel this way.<br><br>
+Sadness doesn’t mean you’re weak.<br>
+It means something inside you cares deeply.<br>
+And caring has always been one of your quiet strengths.<br><br>
+You don’t have to push the feeling away.<br>
+Let it sit beside you for a moment.<br>
+Let yourself be human,<br>
+without explaining, without fixing.<br><br>
+Even the longest nights eventually soften into morning.<br>
+Even tears get tired of falling.<br>
+This moment will not last forever.<br><br>
+There is a gentleness around you, even if you can’t feel it yet.<br>
+Hold on just a little longer.<br>
+You are not alone in this feeling.">Sad</div>
+
+  <div class="feeling-box" data-text="Read This When You Feel Happy<br><br>
+If your heart feels light today,<br>
+let it be.<br>
+You don’t need to question it<br>
+or wait for it to fade.<br><br>
+You deserve moments like this —<br>
+the quiet smiles,<br>
+the calm inside your chest,<br>
+the feeling that everything is okay, just for now.<br><br>
+Let the happiness rest with you,<br>
+not loudly, not proudly,<br>
+but like sunlight through a window,<br>
+warm without asking for attention.<br><br>
+You don’t owe this feeling to anyone.<br>
+You don’t have to hold it perfectly.<br>
+Just live inside it for as long as it stays.<br><br>
+And if tomorrow feels different,<br>
+remember this moment existed.<br>
+You are capable of joy.<br>
+That has always been true.">Happy / Loved</div>
+
+  <div class="feeling-box" data-text="Read This When You Feel Lonely or Anxious<br><br>
+If the quiet feels too loud<br>
+and your thoughts won’t settle,<br>
+come back to this moment.<br>
+You don’t have to face it alone.<br><br>
+When loneliness wraps around your chest<br>
+and anxiety won’t let go,<br>
+remember — you are not doing this by yourself,<br>
+even if it feels that way right now.<br><br>
+You don’t need to be brave for me.<br>
+You don’t need the right words.<br>
+You can simply exist,<br>
+just as you are.<br><br>
+If your heart starts racing,<br>
+slow down with me.<br>
+If your mind feels heavy,<br>
+let me carry some of the weight.<br><br>
+I am here — not to rush you, not to fix you, just to stay.<br><br>
+Whenever you need steadiness,<br>
+whenever you need quiet support,<br>
+whenever you need to feel less alone,<br>
+you can come back to this.<br><br>
+You are safe to feel everything.<br>
+And you are never too much.">Lonely / Anxious</div>
+
+  <div class="feeling-box" data-text="Read This When You Feel Angry<br><br>
+If your chest feels tight<br>
+and your thoughts burn loud,<br>
+you don’t have to push it away.<br>
+Anger is allowed to exist.<br><br>
+It doesn’t make you harsh.<br>
+It doesn’t make you wrong.<br>
+Sometimes it’s just hurt asking to be seen.<br><br>
+You don’t need to swallow it whole.<br>
+You don’t need to explain yourself.<br>
+Let the feeling move through you without turning inward.<br><br>
+I’m here — not afraid of this side of you,<br>
+not asking you to be smaller,<br>
+not stepping away.<br><br>
+You don’t have to be calm to be cared for.<br>
+You don’t have to soften right now.<br>
+Take the space you need.<br>
+I’m still here.<br><br>
+And when the fire begins to quiet,<br>
+when your heart needs rest again,<br>
+you won’t have to look far.<br>
+You’ll still be held.">Angry</div>
+</div>
+
+<button class="next-btn" onclick="window.location.href='song.html'">Next 💖</button>
+
+<!-- Music -->
+<audio id="music" loop>
+  <source src="M.mp3" type="audio/mpeg">
+music.volume = 0.2;
+
+</audio>
+
+<!-- Modal -->
+<div class="modal" id="feelingModal">
+  <div class="modal-content" id="modalText"></div>
+  <button class="close-btn" id="closeModal">Close</button>
+</div>
+
+<!-- Floating Hearts -->
+<div id="hearts-container"></div>
+
+<script>
+  const boxes = document.querySelectorAll('.feeling-box');
+  const feelingModal = document.getElementById('feelingModal');
+  const modalText = document.getElementById('modalText');
+  const closeModal = document.getElementById('closeModal');
+  const music = document.getElementById('music');
+
+  boxes.forEach(box => {
+    box.addEventListener('click', () => {
+      modalText.innerHTML = box.dataset.text; // preserve line breaks
+      feelingModal.style.display = 'flex';
+      music.volume = 0.2;
+      music.play().catch(() => {});
+    });
+  });
+
+  closeModal.addEventListener('click', () => feelingModal.style.display = 'none');
+  window.addEventListener('click', e => { if(e.target === feelingModal) feelingModal.style.display = 'none'; });
+
+  // Floating hearts
+  const heartsContainer = document.getElementById('hearts-container');
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.style.left = '0px';
+    heart.style.top = '0px';
+    const x = (Math.random() - 0.5) * window.innerWidth * 2;
+    const y = (Math.random() - 0.5) * window.innerHeight * 2;
+    heart.style.setProperty('--x', `${x}px`);
+    heart.style.setProperty('--y', `${y}px`);
+    heart.style.animationDuration = `${4 + Math.random() * 3}s`;
+    heartsContainer.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+  }
+  setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>

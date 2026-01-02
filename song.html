@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 💜</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: url("https://www.transparenttextures.com/patterns/soft-wallpaper.png"),
+              linear-gradient(135deg, #ffd6eb, #ffe5f2, #f3d1ff);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Black Chancery", "Apple Chancery", "URW Chancery L", cursive;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* DEDICATION */
+#dedication {
+  max-width: 800px;
+  font-size: 1.7em;
+  color: #6b2b75;
+  text-shadow: 0 0 12px rgba(255,200,240,0.9);
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+/* HEART BUTTON */
+#heart {
+  font-size: 5em;
+  cursor: pointer;
+  color: #965cfa;
+  animation: pulse 1.5s infinite;
+  text-shadow: 0 0 25px #ccb4ff;
+  z-index: 5;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+
+#tap {
+  font-size: 1.4em;
+  color: #6c2a77;
+  margin-top: 8px;
+}
+
+/* LYRICS */
+#lyricsBox {
+  margin-top: 40px;
+  max-width: 800px;
+  padding: 20px;
+  font-size: 2em;
+  color: #4c155e;
+  text-shadow: 0 0 12px rgba(255,200,240,0.9);
+  min-height: 90px;
+}
+
+/* lyric animation */
+.line {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+/* FLOATING HEARTS */
+.heartfloat {
+  position: absolute;
+  font-size: 18px;
+  color: rgba(150,92,250,0.5);
+  animation: floatUp 7s linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(-600px); opacity: 0; }
+}
+
+/* NEXT BUTTON */
+#nextBtn {
+  display: none;
+  background: #965cfa;
+  color: white;
+  text-decoration: none;
+  font-size: 1.4em;
+  padding: 12px 30px;
+  border-radius: 30px;
+  box-shadow: 0 0 20px rgba(150,92,250,0.7);
+  font-family: "Black Chancery", cursive;
+  transition: 0.3s ease, opacity 1s ease;
+  opacity: 0;
+  margin-top: 30px;
+}
+
+#nextBtn.show {
+  display: inline-block;
+  opacity: 1;
+}
+
+#nextBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(150,92,250,0.9);
+}
+</style>
+</head>
+
+<body>
+
+<div id="dedication">
+  I’m dedicating this song to you…<br>
+  because every time it plays, it feels like you’re near me,<br>
+  and it reminds me how much you mean to my heart 💜
+</div>
+
+<div id="heart">💜</div>
+<div id="tap">Tap the heart</div>
+
+<div id="lyricsBox">
+  <p class="line"></p>
+</div>
+
+<audio id="song" src="song.mp3"></audio>
+
+<!-- NEXT BUTTON -->
+<a href="letter.html" id="nextBtn">Next 💜</a>
+
+<script>
+const heart = document.getElementById("heart");
+const song = document.getElementById("song");
+const lyricLine = document.querySelector(".line");
+const nextBtn = document.getElementById("nextBtn");
+
+let played = false;
+
+// Lyrics array
+const lyrics = [
+  { time: 36, text: "There’s still a few other things…" },
+  { time: 40, text: "She loves love notes and babies…" },
+  { time: 43, text: "And likes giving gifts." },
+  { time: 45, text: "Has a hard time accepting…" },
+  { time: 48, text: "A good compliment." },
+  { time: 50, text: "She loves her whole family…" },
+  { time: 52, text: "And all of her friends." },
+  { time: 55, text: "So if you’re the one she lets in…" },
+  { time: 59, text: "Take it." },
+  { time: 61, text: "If she gives you her heart, don’t you break it." },
+  { time: 66, text: "Let your arms be a place she feels safe in." },
+  { time: 70, text: "She’s the best thing that you’ll ever have." },
+  { time: 75, text: "She’ll love you if you love her…" },
+  { time: 77, text: "On days when…" },
+  { time: 80, text: "It feels like the whole world might cave in…" },
+  { time: 84, text: "Stand side by side and you’ll make it." },
+  { time: 89, text: "She’s the best thing that you’ll ever have." },
+  { time: 94, text: "She’ll love you if you love her like that." }
+];
+
+// Fade in
+function fadeIn(audio) {
+  audio.volume = 0;
+  let v = 0;
+  const f = setInterval(() => {
+    if (v < 1) { v += 0.04; audio.volume = v; } 
+    else clearInterval(f);
+  }, 200);
+}
+
+// Fade out
+function fadeOut(audio) {
+  let v = audio.volume;
+  const f = setInterval(() => {
+    if (v > 0.05) { v -= 0.04; audio.volume = v; } 
+    else { audio.pause(); clearInterval(f); showNextBtn(); }
+  }, 200);
+}
+
+// Show next button after song
+function showNextBtn() {
+  nextBtn.classList.add("show");
+}
+
+// Play logic
+heart.addEventListener("click", () => {
+  if (played) return;
+  played = true;
+  song.currentTime = 35;
+  fadeIn(song);
+  song.play();
+  startLyrics();
+
+  // stop at 1:35
+  setTimeout(() => fadeOut(song), 60000);
+});
+
+function startLyrics() {
+  setInterval(() => {
+    let now = Math.floor(song.currentTime);
+    lyrics.forEach(l => {
+      if (now === l.time) {
+        lyricLine.style.opacity = 0;
+        setTimeout(() => {
+          lyricLine.textContent = l.text;
+          lyricLine.style.opacity = 1;
+        }, 400);
+      }
+    });
+  }, 700);
+}
+
+// floating hearts
+function spawnHeart() {
+  const h = document.createElement("div");
+  h.className = "heartfloat";
+  h.textContent = "💜";
+  h.style.left = Math.random() * window.innerWidth + "px";
+  h.style.fontSize = Math.random() * 26 + 12 + "px";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 7000);
+}
+setInterval(spawnHeart, 500);
+
+</script>
+</body>
+</html>

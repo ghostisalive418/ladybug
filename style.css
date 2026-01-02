@@ -1,0 +1,97 @@
+/* ===== Import Lovey Font ===== */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+/* ===== Body & Background ===== */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif; /* fallback */
+  background: linear-gradient(135deg, #e6e6fa, #d8bfd8, #dda0dd);
+  color: #fff;
+  text-align: center;
+  overflow-x: hidden; /* keep horizontal hidden */
+  position: relative;
+}
+
+/* ===== Main content ===== */
+main {
+  position: relative;
+  z-index: 2;
+  padding: 50px 20px 200px 20px; /* extra bottom padding for scrolling */
+}
+
+/* ===== Page Title ===== */
+h1 {
+  font-size: 3em;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px #fff;
+}
+
+/* ===== Letter Lines ===== */
+#line-letter p {
+  font-family: 'Dancing Script', cursive; /* lovey romantic font */
+  font-size: 2em; /* bigger font */
+  margin: 15px 0;
+  opacity: 0;
+  transition: opacity 1s ease-in;
+  line-height: 1.6em;
+  text-shadow: 0 0 5px #fff;
+}
+
+/* ===== Floating Hearts ===== */
+.floating-heart {
+  position: absolute;
+  font-size: 20px;
+  color: #ff69b4;
+  opacity: 0.7;
+  pointer-events: none;
+  animation: floatHeart 6s linear infinite;
+}
+
+@keyframes floatHeart {
+  0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+  50% { transform: translateY(-200px) translateX(20px); opacity: 1; }
+  100% { transform: translateY(-400px) translateX(-20px); opacity: 0; }
+}
+
+/* ===== Big Beating Heart ===== */
+.big-heart {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 300px;
+  color: #ff69b4;
+  opacity: 0.15;
+  animation: beat 1.2s infinite;
+  z-index: 0;
+  pointer-events: none; /* so it doesn’t block scrolling */
+}
+
+@keyframes beat {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* ===== Next Button ===== */
+#nextBtn {
+  display: none; /* hidden initially */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2em;
+  padding: 20px 40px;
+  background: #ff69b4;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 0 20px #ff69b4;
+  z-index: 3;
+  color: #fff;
+  transition: 0.3s all;
+}
+
+#nextBtn:hover {
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 0 0 30px #ff1493;
+}

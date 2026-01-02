@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>31 December 2025</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e1b2e, #2a2442);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Patrick Hand', cursive;
+    transition: opacity 1.5s ease;
+  }
+
+  body.fade-out { opacity: 0; }
+
+  .journal {
+    width: 90%;
+    max-width: 720px;
+    max-height: 85vh;
+    background: #f7f3eb;
+    padding: 50px 45px;
+    border-radius: 18px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .date {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+
+  .day {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 30px;
+  }
+
+  .entry {
+    white-space: pre-wrap;
+    line-height: 1.9;
+    font-size: 18px;
+  }
+
+  .end {
+    margin-top: 40px;
+    font-style: italic;
+    text-align: right;
+  }
+
+  .close-btn {
+    margin-top: 35px;
+    padding: 10px 26px;
+    font-size: 14px;
+    border-radius: 20px;
+    border: none;
+    background: #6f5fa7;
+    color: #fff;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+
+<audio id="tick" src="tick.mp3" loop></audio>
+<audio id="song" src="M.mp3" loop></audio>
+
+<div class="journal">
+  <div class="date">DATE: 31 DEC 2025</div>
+  <div class="day">DAY: 76</div>
+
+  <div class="entry" id="entry"></div>
+  <div class="end" id="end"></div>
+
+  <button class="close-btn" onclick="closeJournal()">Close the journal</button>
+</div>
+
+<script>
+const entryText = `Hey love..it's been 76 days today..this day is always special for me..i remember how we spend this day..it was so pure..you were going to your grandparent's then you asked me for music date..when you came back we listened to a lot of music..we celebrated new year night together.. being silly..I still remember on 1 jan 2025 at 1:20 am..I made the worst joke..I was like, "Am i pregnant?", you were like "You are pregnant??" Then I said "I have butterflies in my stomach"..just because you called me "babe" I swear to god that joke was the worst in whole 2025..do you remember all of this?..do you remember how happy we were?..you were sad sad cause..I didn't give you a hug at first..I remember the next day you were going to your bestie's house.....
+
+I guess enough with memories..it makes me cry so much..I feel happy remembering it..it feels like you are just here..but when I realise..i can't hold myself..I'm sorry..it's gonna be a big year for you..I wish all the best and you'll always have blessings..just don't pull yourself back with your stress and anxiety..you can do so much better..just believe in yourself..I believe in you.. always be strong..make new friends when you get into a new college..I hope they'll be good to you..if they won't be..I'll break their teeth..so they better should be..and if you ever lost yourself..if you ever feel lonely and unloved.. remember..I'm still here..I will always be here for you hmm?..I care about you..okay?..be a good girl always..take care of yourself..I'll pray for your good health and happiness..and I hope you are taking your medicine on time.. don't be silly in these things hmm?
+
+I just remembered when you asked me that question on this day..you asked "why is the ghost listening to a silly girl doing everything she says?"
+Ghost did everything to make her happy.. ghost changed that pfp just to make her happy.. ghost left that boring life and started clean just to see her happy..he started to being alive..because he really care if she's happy or not..he cares for her..he never truly accepted friends..but he accepted her..he love her.. always the way he likes to get loved..
+
+Goodnight ladybug..all the best for exams..I love you the most..and i always will..`;
+
+const endText = `~ Ghost`;
+
+const entry = document.getElementById("entry");
+const end = document.getElementById("end");
+const tick = document.getElementById("tick");
+const song = document.getElementById("song");
+
+let i = 0, j = 0, started = false;
+
+function fadeIn(audio, target = 0.22) {
+  audio.volume = 0;
+  audio.play();
+  const up = setInterval(() => {
+    if (audio.volume < target) audio.volume += 0.01;
+    else clearInterval(up);
+  }, 120);
+}
+
+function fadeOut(audio) {
+  const down = setInterval(() => {
+    if (audio.volume > 0.02) audio.volume -= 0.02;
+    else {
+      audio.pause();
+      clearInterval(down);
+    }
+  }, 120);
+}
+
+function startEverything() {
+  if (started) return;
+  started = true;
+  tick.volume = 0.12;
+  tick.play();
+  fadeIn(song);
+  typeEntry();
+}
+
+document.body.addEventListener("click", startEverything, { once: true });
+
+function typeEntry() {
+  if (i < entryText.length) {
+    entry.textContent += entryText[i++];
+    entry.scrollTop = entry.scrollHeight;
+    setTimeout(typeEntry, 28);
+  } else setTimeout(typeEnd, 600);
+}
+
+function typeEnd() {
+  if (j < endText.length) {
+    end.textContent += endText[j++];
+    setTimeout(typeEnd, 40);
+  }
+}
+
+function closeJournal() {
+  fadeOut(song);
+  tick.pause();
+  document.body.classList.add("fade-out");
+  setTimeout(() => location.href = "index.html", 1500);
+}
+</script>
+
+</body>
+</html>
